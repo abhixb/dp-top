@@ -1,0 +1,4 @@
+_target_: topreward.clients.molmo.Molmo2Client
+model_name: allenai/Molmo2-8B
+rpm: 0.0
+max_input_length: 32768

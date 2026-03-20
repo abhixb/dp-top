@@ -1,0 +1,3 @@
+_target_: topreward.clients.openai.OpenAIClient
+model_name: gpt-4o
+detail: high

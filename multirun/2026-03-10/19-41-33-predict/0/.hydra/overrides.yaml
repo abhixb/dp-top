@@ -1,0 +1,8 @@
+- dataset.num_context_episodes=0
+- model=qwen
+- mapper=regex
+- mapper.max_new_tokens=null
+- mapper.temperature=null
+- mapper.retries=null
+- mapper.mapping_prompt=null
+- prediction.num_examples=2

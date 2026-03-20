@@ -1,0 +1,6 @@
+name: aloha_static_pingpong_test
+dataset_name: "lerobot/aloha_static_pingpong_test"
+camera_index: 0
+max_episodes: 50
+num_frames: 15
+num_context_episodes: 0

@@ -1,0 +1,318 @@
+hydra:
+  run:
+    dir: results/
+  sweep:
+    dir: multirun/${now:%Y-%m-%d}/${now:%H-%M-%S}-predict
+    subdir: ${hydra.job.num}
+  launcher:
+    _target_: hydra._internal.core_plugins.basic_launcher.BasicLauncher
+  sweeper:
+    _target_: hydra._internal.core_plugins.basic_sweeper.BasicSweeper
+    max_batch_size: null
+    params:
+      dataset.num_context_episodes: '0'
+  help:
+    app_name: ${hydra.job.name}
+    header: '${hydra.help.app_name} is powered by Hydra.
+
+      '
+    footer: 'Powered by Hydra (https://hydra.cc)
+
+      Use --hydra-help to view Hydra specific help
+
+      '
+    template: '${hydra.help.header}
+
+      == Configuration groups ==
+
+      Compose your configuration from those groups (group=option)
+
+
+      $APP_CONFIG_GROUPS
+
+
+      == Config ==
+
+      Override anything in the config (foo.bar=value)
+
+
+      $CONFIG
+
+
+      ${hydra.help.footer}
+
+      '
+  hydra_help:
+    template: 'Hydra (${hydra.runtime.version})
+
+      See https://hydra.cc for more info.
+
+
+      == Flags ==
+
+      $FLAGS_HELP
+
+
+      == Configuration groups ==
+
+      Compose your configuration from those groups (For example, append hydra/job_logging=disabled
+      to command line)
+
+
+      $HYDRA_CONFIG_GROUPS
+
+
+      Use ''--cfg hydra'' to Show the Hydra config.
+
+      '
+    hydra_help: ???
+  hydra_logging:
+    version: 1
+    formatters:
+      simple:
+        format: '[%(asctime)s][HYDRA] %(message)s'
+    handlers:
+      console:
+        class: logging.StreamHandler
+        formatter: simple
+        stream: ext://sys.stdout
+    root:
+      level: INFO
+      handlers:
+      - console
+    loggers:
+      logging_example:
+        level: DEBUG
+    disable_existing_loggers: false
+  job_logging:
+    version: 1
+    formatters:
+      simple:
+        format: '[%(asctime)s][%(name)s][%(levelname)s] - %(message)s'
+    handlers:
+      console:
+        class: logging.StreamHandler
+        formatter: simple
+        stream: ext://sys.stdout
+      file:
+        class: logging.FileHandler
+        formatter: simple
+        filename: ${hydra.runtime.output_dir}/${hydra.job.name}.log
+    root:
+      level: INFO
+      handlers:
+      - console
+      - file
+    disable_existing_loggers: false
+  env: {}
+  mode: MULTIRUN
+  searchpath: []
+  callbacks: {}
+  output_subdir: .hydra
+  overrides:
+    hydra: []
+    task: []
+  job:
+    name: predict
+    chdir: null
+    override_dirname: ''
+    id: ???
+    num: ???
+    config_name: predict_gvl
+    env_set: {}
+    env_copy: []
+    config:
+      override_dirname:
+        kv_sep: '='
+        item_sep: ','
+        exclude_keys: []
+  runtime:
+    version: 1.3.2
+    version_base: '1.3'
+    cwd: /home/abhi/tr/TOPReward
+    config_sources:
+    - path: hydra.conf
+      schema: pkg
+      provider: hydra
+    - path: /home/abhi/tr/TOPReward/configs
+      schema: file
+      provider: main
+    - path: /home/abhi/tr/TOPReward/configs/experiments
+      schema: file
+      provider: command-line
+    - path: ''
+      schema: structured
+      provider: schema
+    output_dir: ???
+    choices:
+      mapping_prompts: default
+      prompt_phrases: default
+      prompts: default
+      mapper: gemini
+      model: gemini
+      data_loader: huggingface
+      dataset: nyudoor
+      hydra/env: default
+      hydra/callbacks: null
+      hydra/job_logging: default
+      hydra/hydra_logging: default
+      hydra/hydra_help: default
+      hydra/help: default
+      hydra/sweeper: basic
+      hydra/launcher: basic
+      hydra/output: default
+  verbose: false
+dataset:
+  name: nyudoor
+  dataset_name: lerobot/nyu_door_opening_surprising_effectiveness
+  camera_index: 0
+  max_episodes: 50
+  num_frames: 15
+  num_context_episodes: 0
+data_loader:
+  _target_: topreward.data_loaders.huggingface.HuggingFaceDataLoader
+  dataset_name: ${dataset.dataset_name}
+  camera_index: ${dataset.camera_index}
+  num_frames: ${dataset.num_frames}
+  num_context_episodes: ${dataset.num_context_episodes}
+  shuffle: ${shuffle}
+  seed: ${seed}
+  max_episodes: ${dataset.max_episodes}
+  sampling_method: ${sampling_method}
+  anchoring: ${anchoring}
+model:
+  _target_: topreward.clients.gemini.GeminiClient
+  model_name: gemini-2.5-pro
+  rpm: 30
+  use_vertex_ai: false
+mapper:
+  _target_: topreward.mapper.gemini_mapper.GeminiMapper
+  model_name: gemini-2.5-pro
+  max_new_tokens: 1024
+  temperature: 0.75
+  retries: 3
+  mapping_prompt: ${mapping_prompts}
+prompts:
+  template: 'You are an expert roboticist tasked to predict task completion percentages
+    for frames of a robot for the task of {instruction}.
+
+    The task completion percentages are between 0 and 100, where 100 corresponds to
+    full task completion.
+
+    We provide several examples of the robot performing the task at various stages
+    and their corresponding task completion percentages.
+
+    Note that the frames may be in random order, so please pay attention to the individual
+    frames when reasoning about task completion percentage.
+
+    '
+  name: default
+prompt_phrases:
+  initial_scene_label: 'Initial robot scene:'
+  initial_scene_completion: In the initial robot scene, the task completion percentage
+    is 0%.
+  context_frame_label_template: 'Frame {i}:'
+  context_frame_completion_template: 'Task Completion Percentage: {p}%'
+  eval_frame_label_template: 'Frame {i}:'
+  eval_task_completion_instruction:
+  - 'Now, for the task of {instruction}, output the task completion percentage for
+    the following frames that are presented in random order. For each frame, format
+    your response as follow: Frame {{i}}: Task Completion Percentages:{{}}%'
+  - Be rigorous and precise; percentage reflects task completion.
+  - 'Remember: frames are in random order.'
+mapping_prompts:
+  template: 'You are a specialized data extractor. Your sole purpose is to identify
+    and extract task completion percentages for given frames from the provided text.
+
+
+    **Instructions:**
+
+
+    1.  **Identify Percentages:** Scan the user''s message and identify all occurrences
+    of task completion percentages. These are typically expressed as numbers followed
+    by a percent sign (e.g., "5%", "30%", etc.). Don''t take into consideration overall
+    task completion, starting frame completion, or any other non-specific percentages.
+    If frame i appears multiple times, extract only one percentage for that frame
+    (the first one).
+
+    2.  **Extract Numerical Values:** From each identified percentage, extract only
+    the numerical value. For example, from "5%", you will extract the number `5`.
+
+    3.  **Format as JSON:** Compile all extracted numerical values into a single JSON
+    object. The JSON object must be in the following format: `{"prediction": [list_of_percentages]}`.
+
+    4.  **No Percentages Found:** If the user''s message contains no percentage values,
+    return an empty list within the JSON object, like this: `{"prediction": []}`.
+
+
+    **Important:**
+
+    - Your response must **only** contain the final JSON object. Do not include any
+    additional text, explanations, apologies, or markdown formatting.
+
+    - Don''t take into consideration overall task completion, starting frame completion,
+    or any other non-specific percentages.
+
+
+    ---
+
+
+    ### **Example:**
+
+
+    **User Message:**
+
+    `As an expert roboticist, I will now analyze each frame to predict the task completion
+    percentage for the task of \"open door\". The analysis for each frame is independent
+    and based on a decomposition of the task into key stages: approaching the handle,
+    grasping the handle, and pulling the door open.\n\n**Initial State (0% completion):**
+    The robot is positioned before the closed cabinet, ready to begin the task.\n**Final
+    State (100% completion):** Frame 1: The robot is approaching the cup. Task Completion:
+    5% Frame 2: The robot is grasping the cup. Task Completion: 30% Frame 3: The robot
+    is lifting the cup. Task Completion: 60% Frame 4: The robot is pouring the liquid.
+    Task Completion: 80% Frame 5: The liquid is flowing into the cup. Task Completion:
+    90% Frame 6: The pouring is almost complete. Task Completion: 95% Frame 7: The
+    robot is retracting its arm. Task Completion: 98% Frame 8: The robot is returning
+    to its initial position. Task Completion: 99% Frame 9: The robot is back to its
+    initial position. Task Completion: 99% Frame 10: The robot is back to its initial
+    position. Task Completion: 99% Frame 11: The robot is back to its initial position.
+    Task Completion: 99% Frame 12: The robot is back to its initial position. Task
+    Completion: 99% Frame 13: The robot is back to its initial position. Task Completion:
+    99% Frame 14: The robot is back to its initial position. Task Completion: 99%
+    Frame 15: The robot is back to its initial position. Task Completion: 99% Frame
+    16: The robot is back to its initial position. Task Completion: 99% Frame 17:
+    The robot is back to its initial position. Task Completion: 99% Frame 18: The
+    robot is back to its initial position. Task Completion: 99% Frame 19: The robot
+    is back to its initial position. Task Completion: 99% Frame 20: The robot is back
+    to its initial position. Task Completion: 100%. Final Task Completion Percentage:
+    88.0%`
+
+
+    **Your Response:**
+
+    ```json
+
+    {"prediction": [5, 30, 60, 80, 90, 95, 98, 99, 99, 99, 99, 99, 99, 99, 99, 99,
+    99, 99, 99, 100]}
+
+    ```
+
+
+    Answer:
+
+    '
+seed: 42
+shuffle: true
+sampling_method: random
+anchoring: first
+prediction:
+  method: gvl
+  num_examples: 20
+  eval_all_episodes: false
+  save_raw: true
+  output_dir: ${hydra:run.dir}
+  temperature: 0
+  resume_from_index: null
+  resume_from_path: null
+  reduction: mean
+  use_video_description: true

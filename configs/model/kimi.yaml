@@ -1,0 +1,3 @@
+_target_: topreward.clients.kimi.KimiThinkingClient
+model_name: moonshotai/Kimi-VL-A3B-Thinking-2506
+max_input_length: 32000

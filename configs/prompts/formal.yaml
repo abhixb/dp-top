@@ -1,0 +1,4 @@
+template: |
+  You are an expert evaluator tasked with assessing task completion percentages for frames related to the objective: {instruction}. The completion percentage must be reported on a scale of 0 to 100, where 100 signifies full task completion. The frames are provided in a non-sequential order; you must evaluate each frame independently.
+
+name: formal

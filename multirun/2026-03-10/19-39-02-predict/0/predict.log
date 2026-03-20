@@ -1,0 +1,15 @@
+[2026-03-10 19:39:02,815][datasets.features.features][WARNING] - Overwriting feature type 'VideoFrame' (VideoFrame -> VideoFrame)
+[2026-03-10 19:39:07,343][accelerate.utils.modeling][INFO] - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+[2026-03-10 19:39:21,065][google_genai._api_client][WARNING] - Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
+[2026-03-10 19:39:27,663][google_genai.models][INFO] - AFC is enabled with max remote calls: 10.
+[2026-03-10 19:39:27,830][httpx][INFO] - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent "HTTP/1.1 429 Too Many Requests"
+[2026-03-10 19:39:28,909][google_genai.models][INFO] - AFC is enabled with max remote calls: 10.
+[2026-03-10 19:39:29,042][httpx][INFO] - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent "HTTP/1.1 429 Too Many Requests"
+[2026-03-10 19:39:30,984][google_genai.models][INFO] - AFC is enabled with max remote calls: 10.
+[2026-03-10 19:39:31,106][httpx][INFO] - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent "HTTP/1.1 429 Too Many Requests"
+[2026-03-10 19:39:36,581][google_genai.models][INFO] - AFC is enabled with max remote calls: 10.
+[2026-03-10 19:39:36,717][httpx][INFO] - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent "HTTP/1.1 429 Too Many Requests"
+[2026-03-10 19:39:37,832][google_genai.models][INFO] - AFC is enabled with max remote calls: 10.
+[2026-03-10 19:39:37,956][httpx][INFO] - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent "HTTP/1.1 429 Too Many Requests"
+[2026-03-10 19:39:39,880][google_genai.models][INFO] - AFC is enabled with max remote calls: 10.
+[2026-03-10 19:39:39,997][httpx][INFO] - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent "HTTP/1.1 429 Too Many Requests"

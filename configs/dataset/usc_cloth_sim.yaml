@@ -1,0 +1,6 @@
+name: usc_cloth_sim
+dataset_name: "lerobot/usc_cloth_sim"
+camera_index: 0
+max_episodes: 50
+num_frames: 15
+num_context_episodes: 0

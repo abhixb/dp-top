@@ -1,0 +1,2 @@
+_target_: topreward.clients.gemma.GemmaClient
+model_name: google/gemma-3-12b-it

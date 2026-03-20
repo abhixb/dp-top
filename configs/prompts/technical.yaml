@@ -1,0 +1,6 @@
+template: |
+  Role: You are an expert evaluator.
+  Task: You are tasked with assessing task completion percentages for frames related to the objective: {instruction}.
+  Scale: The completion percentage must be reported on a scale of 0 to 100, where 100 signifies full task completion.
+  Constraint: The frames are provided in a non-sequential order; you must evaluate each frame independently.
+name: technical

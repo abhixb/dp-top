@@ -1,0 +1,4 @@
+- dataset.num_context_episodes=0
+- model=qwen
+- model.model_name=Qwen/Qwen2.5-VL-3B-Instruct
+- prediction.num_examples=2

@@ -1,0 +1,4 @@
+_target_: topreward.clients.qwen.QwenClient
+model_name: Qwen/Qwen3-VL-8B-Instruct
+max_input_length: 32000
+load_in_4bit: true

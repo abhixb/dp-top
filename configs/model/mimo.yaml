@@ -1,0 +1,3 @@
+_target_: topreward.clients.qwen.QwenClient
+model_name: XiaomiMiMo/MiMo-VL-7B-RL-2508
+max_input_length: 32000

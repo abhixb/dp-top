@@ -1,0 +1,4 @@
+template: |
+  Hey there! Your job is to guess the task completion percentages for some frames showing the task: {instruction}. The percentages are just from 0 to 100, where 100 means the task is all done. The frames might be all mixed up and out of order, so just look at each one by itself when you're making your guess.
+
+name: conversational

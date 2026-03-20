@@ -1,0 +1,2 @@
+[2026-03-10 19:42:55,628][datasets.features.features][WARNING] - Overwriting feature type 'VideoFrame' (VideoFrame -> VideoFrame)
+[2026-03-10 19:42:59,602][accelerate.utils.modeling][INFO] - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).

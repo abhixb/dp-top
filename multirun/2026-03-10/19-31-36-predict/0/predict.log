@@ -1,0 +1,11 @@
+[2026-03-10 19:31:37,045][datasets.features.features][WARNING] - Overwriting feature type 'VideoFrame' (VideoFrame -> VideoFrame)
+[2026-03-10 19:31:38,765][google_genai._api_client][WARNING] - Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
+[2026-03-10 19:31:38,784][google_genai._api_client][WARNING] - Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
+[2026-03-10 19:31:39,417][google_genai.models][INFO] - AFC is enabled with max remote calls: 10.
+[2026-03-10 19:31:40,066][httpx][INFO] - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+[2026-03-10 19:31:41,120][google_genai.models][INFO] - AFC is enabled with max remote calls: 10.
+[2026-03-10 19:31:41,724][httpx][INFO] - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+[2026-03-10 19:31:43,367][google_genai.models][INFO] - AFC is enabled with max remote calls: 10.
+[2026-03-10 19:31:43,969][httpx][INFO] - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+[2026-03-10 19:31:48,312][google_genai.models][INFO] - AFC is enabled with max remote calls: 10.
+[2026-03-10 19:31:48,858][httpx][INFO] - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 429 Too Many Requests"

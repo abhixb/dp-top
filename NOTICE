@@ -1,0 +1,18 @@
+TOPReward
+Copyright (c) 2026 Shirui Chen, Cole Harrison, Zhongzheng (Jason) Ren
+
+This product includes substantial code adapted from OpenGVL
+(https://github.com/budzianowski/opengvl) by Paweł Budzianowski,
+Emilia Wiśnios, Gracjan Góral, Michał Tyrolski, Igor Kulakov,
+Viktor Petrenko, and Krzysztof Walas, licensed under the MIT License.
+Large portions of the implementation under the `topreward/` package
+are based on and extended from OpenGVL.
+
+This work includes code adapted from LeRobot
+(https://github.com/huggingface/lerobot) by HuggingFace, licensed
+under the Apache License, Version 2.0. The following files are
+derived from LeRobot:
+  - topreward/utils/video_utils.py
+
+A copy of the Apache License 2.0 is available at:
+http://www.apache.org/licenses/LICENSE-2.0

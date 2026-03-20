@@ -1,0 +1,7 @@
+_target_: topreward.clients.gemini.GeminiClient
+model_name: gemini-2.5-pro
+rpm: 30
+# Vertex AI configuration (required for instruction reward with logprobs)
+use_vertex_ai: true
+project_id: ${oc.env:GOOGLE_CLOUD_PROJECT}
+location: us-central1

@@ -1,0 +1,6 @@
+name: cmu_play_fusion
+dataset_name: "lerobot/cmu_play_fusion"
+camera_index: 0
+max_episodes: 50
+num_frames: 15
+num_context_episodes: 0

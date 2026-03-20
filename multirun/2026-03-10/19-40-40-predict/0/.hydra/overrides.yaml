@@ -1,0 +1,4 @@
+- dataset.num_context_episodes=0
+- model=qwen
+- mapper=regex
+- prediction.num_examples=2

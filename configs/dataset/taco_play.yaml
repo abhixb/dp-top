@@ -1,0 +1,6 @@
+name: taco_play
+dataset_name: "lerobot/taco_play"
+camera_index: 0
+max_episodes: 50
+num_frames: 15
+num_context_episodes: 0

@@ -1,0 +1,6 @@
+- data_loader=local
+- dataset=local_video
+- dataset.video_path=/absolute/path/to/video.mp4
+- dataset.instruction=open the drawer
+- prediction.num_examples=1
+- prediction.output_dir=./results/local_video_topreward

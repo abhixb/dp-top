@@ -1,0 +1,19 @@
+[2026-03-10 19:18:27,625][datasets.features.features][WARNING] - Overwriting feature type 'VideoFrame' (VideoFrame -> VideoFrame)
+[2026-03-10 19:18:29,341][google_genai._api_client][WARNING] - Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
+[2026-03-10 19:18:29,374][google_genai._api_client][WARNING] - Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
+[2026-03-10 19:18:30,071][google_genai.models][INFO] - AFC is enabled with max remote calls: 10.
+[2026-03-10 19:18:30,837][httpx][INFO] - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent "HTTP/1.1 429 Too Many Requests"
+[2026-03-10 19:18:31,942][google_genai.models][INFO] - AFC is enabled with max remote calls: 10.
+[2026-03-10 19:18:32,513][httpx][INFO] - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent "HTTP/1.1 429 Too Many Requests"
+[2026-03-10 19:18:34,517][google_genai.models][INFO] - AFC is enabled with max remote calls: 10.
+[2026-03-10 19:18:35,135][httpx][INFO] - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent "HTTP/1.1 429 Too Many Requests"
+[2026-03-10 19:18:39,427][google_genai.models][INFO] - AFC is enabled with max remote calls: 10.
+[2026-03-10 19:18:40,035][httpx][INFO] - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent "HTTP/1.1 429 Too Many Requests"
+[2026-03-10 19:18:47,032][google_genai.models][INFO] - AFC is enabled with max remote calls: 10.
+[2026-03-10 19:18:47,650][httpx][INFO] - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent "HTTP/1.1 429 Too Many Requests"
+[2026-03-10 19:19:05,329][google_genai.models][INFO] - AFC is enabled with max remote calls: 10.
+[2026-03-10 19:19:05,943][httpx][INFO] - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent "HTTP/1.1 429 Too Many Requests"
+[2026-03-10 19:19:35,769][google_genai.models][INFO] - AFC is enabled with max remote calls: 10.
+[2026-03-10 19:19:36,369][httpx][INFO] - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent "HTTP/1.1 429 Too Many Requests"
+[2026-03-10 19:20:04,490][google_genai.models][INFO] - AFC is enabled with max remote calls: 10.
+[2026-03-10 19:20:05,107][httpx][INFO] - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent "HTTP/1.1 429 Too Many Requests"
