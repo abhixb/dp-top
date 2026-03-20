@@ -18,7 +18,7 @@ from pathlib import Path
 
 import numpy as np
 import torch
-from torch.utils.data import DataLoader
+from torch.utils.data import DataLoader, WeightedRandomSampler
 
 from awr.config import (
     BATCH_SIZE,
@@ -80,7 +80,7 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--weights", type=Path, default=OUTPUT_DIR / "advantages" / "weights.npy")
     p.add_argument("--steps", type=int, default=NUM_TRAIN_STEPS)
     p.add_argument("--lr", type=float, default=LEARNING_RATE)
-    p.add_argument("--batch-size", type=int, default=BATCH_SIZE)
+    p.add_argument("--batch-size", type=int, default=64)
     p.add_argument("--output", type=Path, default=OUTPUT_DIR / "checkpoints" / "diffusion_awr")
     p.add_argument("--resume", type=Path, default=None,
                    help="Resume from checkpoint dir (e.g. checkpoint_43000). Auto-detects start step.")
@@ -148,11 +148,18 @@ def run_training(args: argparse.Namespace) -> None:
     ema = EMAModel(policy, decay=args.ema_decay)
     print(f"EMA decay: {args.ema_decay}")
 
-    # 7. Dataloader
+    # 7. Dataloader — use WeightedRandomSampler so high-advantage samples are
+    # drawn more often; this is proper per-sample AWR weighting without needing
+    # per-sample losses from the policy.
+    sampler = WeightedRandomSampler(
+        weights=weights.tolist(),
+        num_samples=len(weights),
+        replacement=True,
+    )
     dataloader = DataLoader(
         dataset,
         batch_size=args.batch_size,
-        shuffle=True,
+        sampler=sampler,
         num_workers=4,
         pin_memory=True,
     )
@@ -178,17 +185,6 @@ def run_training(args: argparse.Namespace) -> None:
             lr = get_cosine_lr(step, args.steps, args.warmup, args.lr)
             set_lr(optimizer, lr)
 
-            # Get advantage weights for this batch using global index
-            if "index" in batch:
-                batch_indices = batch["index"].cpu().numpy()
-                batch_weights = torch.tensor(
-                    weights[batch_indices],
-                    device=DEVICE,
-                    dtype=torch.float32,
-                )
-            else:
-                batch_weights = torch.ones(len(batch["action"]), device=DEVICE)
-
             # Move batch to GPU
             batch = {
                 k: v.to(DEVICE) if hasattr(v, "to") else v
@@ -197,11 +193,10 @@ def run_training(args: argparse.Namespace) -> None:
 
             # Forward pass
             loss, _ = policy.forward(batch)
-            weighted_loss = loss * batch_weights.mean()
 
             # Backward + clip + update
             optimizer.zero_grad()
-            weighted_loss.backward()
+            loss.backward()
             grad_norm = torch.nn.utils.clip_grad_norm_(policy.parameters(), args.grad_clip)
             optimizer.step()
 
@@ -212,20 +207,17 @@ def run_training(args: argparse.Namespace) -> None:
             if step % LOG_EVERY == 0:
                 entry = {
                     "step": step,
-                    "loss": round(weighted_loss.item(), 4),
-                    "raw_loss": round(loss.item(), 4),
+                    "loss": round(loss.item(), 4),
                     "lr": round(lr, 7),
                     "grad_norm": round(grad_norm.item(), 3),
-                    "mean_weight": round(batch_weights.mean().item(), 3),
                     "elapsed_s": round(time.time() - t0, 1),
                 }
                 log_entries.append(entry)
                 print(
                     f"[{step}/{args.steps}] "
-                    f"loss={entry['raw_loss']:.4f} "
+                    f"loss={entry['loss']:.4f} "
                     f"lr={lr:.2e} "
-                    f"gnorm={entry['grad_norm']:.2f} "
-                    f"w={entry['mean_weight']:.2f}"
+                    f"gnorm={entry['grad_norm']:.2f}"
                 )
 
             # Save checkpoint
@@ -261,6 +253,7 @@ def run_training(args: argparse.Namespace) -> None:
         "ema_decay": args.ema_decay,
         "grad_clip": args.grad_clip,
         "batch_size": args.batch_size,
+        "weighting": "WeightedRandomSampler",
         "total_time_s": round(total_time, 1),
         "entries": log_entries,
     }

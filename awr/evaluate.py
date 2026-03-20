@@ -65,10 +65,8 @@ def evaluate_episode(
         gt_action = sample["action"].numpy()  # (action_dim,) from windowed: (horizon, action_dim)
         # For windowed dataset, action is (horizon, action_dim) — take the current step
         if gt_action.ndim == 2:
-            # The "current" action in the window depends on n_obs_steps
-            # For delta_indices starting at -(n_obs_steps-1), current = index n_obs_steps-1
-            current_idx = policy.config.n_obs_steps - 1
-            gt_action = gt_action[current_idx]
+            # action_delta_indices[0] == 0, so index 0 is the current timestep
+            gt_action = gt_action[0]
 
         gt_actions.append(gt_action)
 
